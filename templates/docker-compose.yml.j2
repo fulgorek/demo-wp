@@ -1,20 +1,30 @@
 version: '3.3'
-
 services:
+   proxy:
+     image: abiosoft/caddy
+     container_name: proxy
+     volumes:
+       - ./Caddyfile:/etc/Caddyfile
+       - ssl_certificates:/root/.caddy
+     environment:
+       - ACME_AGREE=true
+     ports:
+       - 80:80
+       - 443:443
+     restart: always
+     depends_on:
+       - wordpress
    wordpress:
      depends_on:
        - db
      image: wordpress:latest
      volumes:
        - wordpress_files:/var/www/html
-     ports:
-       - "80:80"
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
        WORDPRESS_DB_PASSWORD: my_wordpress_db_password
-
    db:
      image: mysql:5.7
      volumes:
@@ -26,5 +36,6 @@ services:
        MYSQL_USER: wordpress
        MYSQL_PASSWORD: my_wordpress_db_password
 volumes:
+    ssl_certificates:
     wordpress_files:
     db_data:

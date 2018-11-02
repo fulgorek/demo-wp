@@ -1,0 +1,8 @@
+- name: Deploy application
+  gather_facts: no
+  hosts: wordpress
+  tasks:
+  - name: deploy the app inside /opt/app/
+    command: "docker-compose up -d --force-recreate"
+    args:
+      chdir: /opt/app/

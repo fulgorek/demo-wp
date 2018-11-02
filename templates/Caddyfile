@@ -1,9 +1,8 @@
-wp.alejandrotorres.xyz {
+wpdemo.alejandrotorres.xyz:80 {
     log stdout
     errors
     proxy / http://wordpress {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}
     }
-    tls ops@alejandrotorres.xyz
 }

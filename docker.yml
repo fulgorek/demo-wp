@@ -81,3 +81,15 @@
         name: centos
         groups: docker
         append: yes
+
+    - name: enable docker service
+      systemd:
+        name: docker
+        enabled: yes
+      tags: sys
+
+    - name: reload service docker, in all cases
+      systemd:
+        name: docker
+        state: reloaded
+      tags: sys
